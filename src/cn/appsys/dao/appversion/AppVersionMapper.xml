@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.appsys.dao.appversion.AppVersionMapper">
+	<!--List<AppVersion> checkVersionList(@Param("appinfoid")Integer appinfoid);  -->
+	<select id="checkVersionList" resultType="AppVersion">
+		select i.softwareName as appName,v.*,d.valueName as publishStatusName  
+			 from  app_info i,app_version v,data_dictionary d
+				where v.appId=#{appinfoid} 
+					and i.id=#{appinfoid} 
+						and d.typeCode="PUBLISH_STATUS" and d.valueId=v.publishStatus
+	</select>
+	
+	<!-- int delVersion(@Param("appinfoid")Integer appinfoid); -->
+	<delete id="delVersion">
+		delete from app_version
+				where appId=#{appinfoid}
+	</delete>
+	
+</mapper>
